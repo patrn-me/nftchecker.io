@@ -1,0 +1,564 @@
+/*! HTML5 Boilerplate v5.3.0 | MIT License | https://html5boilerplate.com/ */
+
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;600;700&display=swap');
+
+* {
+   font-family: 'Roboto Mono', sans-serif; 
+}
+
+
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+	background-color: #d3d3d3;
+    scroll-behavior: smooth;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Raffy styles
+   ========================================================================== */
+
+.hide {
+    display: none !important;
+}
+body {
+    margin: 0;
+    background: #d3d3d3;
+}
+#arrows {
+    width: 1.5rem;
+    height: 1.5rem;
+    animation: spin 2s infinite linear;
+}
+@keyframes spin {
+    from { transform:rotate(0deg);   }
+    to   { transform:rotate(360deg); }
+}
+pre {
+    margin: 0;
+    white-space: pre-wrap;  
+    overflow-wrap: break-word;
+}
+pre.error {
+    background: #c00;
+    color: #fff;
+    font-weight: bold;
+}
+
+input {
+    border-radius: 8px;
+    height: 32px;
+}
+
+
+#input {
+    flex-direction: column;
+    gap: 0.5rem;
+            }
+#input label:first-child {
+    font-weight: bold;
+}
+#input > * {
+    align-items: center;
+    gap: 0.2rem;
+
+}
+#input input,
+#input select {
+    flex-grow: 1;
+    padding: 1rem;
+}
+#examples {
+    flex-wrap: wrap;
+}
+#nft_menu {
+    overflow: hidden;
+}
+
+#account_field,
+#contract_field {
+    font-family: 'Roboto Mono', sans-serif;
+    font-size: 16pt;
+}
+#output {
+    background: #fff;
+}
+#output > * {
+    display: block;
+}
+#output pre {
+    padding: 0.5rem;    
+}
+#tip {
+    margin: 0;
+    padding: 1rem 3rem;
+}
+#tip li + li {
+    margin-top: 0.5rem;
+}
+#output a:hover {
+    text-decoration: underline;
+}
+.asset {
+    margin: 0 auto;
+    max-width: 100%;
+    background: #fff;
+    padding: 1rem;
+}
+img.asset {
+        border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+
+.bubble {
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    overflow-wrap: break-word;
+    background: #fff;
+}
+a.bubble {
+    color: #231f20;
+    background: var(--accent);
+}
+.bubble.error {
+    color: #231f20;
+    background: #fff;
+}
+.bubble + .bubble {
+    margin-top: 3px;
+}
+.bubble .duration {
+    float: right;
+    font-weight: bold;
+}
+
+a#external.bubble {
+    border-radius: none;
+    }
+
+div.bubble.header {
+    background-color: #fff;
+}
+
+.dimensions {
+    padding: 1rem 0 0.2rem;
+    text-align: center;
+    font-family: monospace;
+}
+#output .dimensions + .asset {
+    padding-top: 0;
+}
+#contract {
+    color: #fff;
+    background: #060;
+}
+#contract code {
+    font-size: 130%;
+}
+#name {
+    font-size: 24pt;
+}
+#desc {
+    background: #fff;
+}
+#metadata {
+    background: #fff;
+    font-size: 9pt; 
+    overflow: auto;
+    max-height: 10rem;
+}
+#attributes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 0.5rem;
+    padding: 0.5rem;
+    display: none;
+}
+#attributes > div {
+    background: #d3d3d3;
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+#attributes .name {
+    font-weight: bold;
+}
+a#external {
+    background: #fff;
+}
+footer {
+    padding: 1rem;
+    text-align: center;
+    color: #231f20;
+}
+
+
+/* ==========================================================================
+   General Styles
+   ========================================================================== */
+
+.check {
+    background-color: #fbfbfb;
+    border: 4px solid #231f20;
+    padding: 2em;
+
+}
+
+nav {
+    padding: 16px 32px 16px 32px;
+    background-color: #fbfbfb;
+    border-bottom: #231f20 1px solid;
+}
+
+
+
+/* ==========================================================================
+   Button
+   ========================================================================== */
+
+button {
+    background-color:#231f20;
+    border-radius:64px;
+    display:inline-block;
+    cursor:pointer;
+    color:#fbfbfb;
+    font-family: 'Roboto Mono', sans-serif;
+    font-size:1em;
+    padding:16px 16px;
+    text-decoration:none
+}
+
+
+
+
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+a {
+    color: #231f20;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #231f20;
+    text-decoration: underline;
+}
+
+
+.break {
+    word-break: break-all;
+}
+
+p {
+    color: #231f20;
+    margin-top: 1.125em;
+    font-weight: 400;
+    font-family: 'Roboto Mono', sans-serif;
+    
+}
+
+h1 {
+    color: #231f20;
+    font-weight: 900;
+    font-size: 2.725em;
+    text-transform: uppercase;
+    font-family: 'Roboto Mono', sans-serif;
+    margin: 8px 0px 8px 0px;
+}
+
+
+h2 {
+    color: #231f20;
+    font-weight: 600;
+    font-size: 2.125em;
+    font-family: 'Roboto Mono', sans-serif;
+
+}
+
+h3 {
+    color: #231f20;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 600;
+    font-size: 1.7125em;
+}
+
+h4 {
+    color: #231f20;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 400;
+    font-size: 1.5em;
+
+
+}
+
+h5 {
+    color: #231f20;
+    font-family: 'Roboto Mono', sans-serif;
+    font-weight: 400;
+        font-size: 1.25em;
+
+
+}
+
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden {
+    display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (max-width: 1152px) {
+    /* Style adjustments for viewports that meet the condition */
+
+    nav {
+    padding: 16px 8px 16px 8px;
+}
+
+
+
+}
+
+@media print,
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 1.25dppx),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after,
+    *:first-letter,
+    *:first-line {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster:
+                                   http://www.sanbeiji.com/archives/953 */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+}
