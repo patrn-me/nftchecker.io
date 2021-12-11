@@ -376,12 +376,22 @@ Token:
 import {smol_provider} from './smol-provider.js';
 import {ABIDecoder} from './abi-decoder.js';
 
+let resolve_aborter;
 let smol = smol_provider('wss://mainnet.infura.io/ws/v3/d2feb3605f5348228f891965bca0dfec');
 let urlParams = new URLSearchParams(window.location.search);
 
-if (urlParams.has('contract') && urlParams.has('token')) {
-  resolve0();
-}
+window.onload = function() {
+  const resolve_btn = document.querySelector('#resolve_btn');
+  const token_field = document.querySelector('#token_field');
+  const contract_field = document.querySelector('#contract_field');
+  const account_field = document.querySelector('#account_field');
+
+  if (urlParams.has('contract') && urlParams.has('token')) {
+    token_field.value = urlParams.get('token');
+    contract_field.value = urlParams.get('contract');
+    resolve();
+  }
+};
 
 function unsigned_mod(x, d) {
 	return (d + (x % d)) % d;
@@ -498,12 +508,7 @@ function create_link(url) {
 	return a;
 }
 
-const resolve_btn = document.querySelector('#resolve_btn');
-const token_field = document.querySelector('#token_field');
-const contract_field = document.querySelector('#contract_field');
-const account_field = document.querySelector('#account_field');
 
-let resolve_aborter;
 
 function step_token(delta) {
 	let token = BigInt(token_field.value.trim()) + BigInt(delta);
@@ -576,16 +581,14 @@ async function resolve() {
 async function resolve0() {
   let start = new Date();
 
+  let contract = contract_field.value.trim().toLowerCase();
   if (urlParams.has('contract')) {
     let contract = urlParams.get('contract');
-  } else {
-    let contract = contract_field.value.trim().toLowerCase();
   }
 
+  let token = token_field.value.trim();
   if (urlParams.has('token')) {
     let token = urlParams.get('token');
-  } else {
-    let token = token_field.value.trim();
   }
 
 	let output = document.querySelector('#output');
