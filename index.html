@@ -538,9 +538,6 @@ for (let el of document.querySelectorAll('button[data-contract]')) {
 	el.addEventListener('click', () => {
     contract_field.value = contract;
     token_field.value = token;
-    urlParams.set("contract", contract);
-    urlParams.set("token", token);
-    window.history.pushState('', '', '?' + urlParams.toString());
     resolve();
 	});
 }
@@ -590,6 +587,10 @@ async function resolve0() {
   if (urlParams.has('token')) {
     let token = urlParams.get('token');
   }
+
+  urlParams.set("contract", contract);
+  urlParams.set("token", token);
+  window.history.pushState('', '', '?' + urlParams.toString());
 
 	let output = document.querySelector('#output');
 	output.innerHTML = '';
