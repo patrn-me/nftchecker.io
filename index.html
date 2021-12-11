@@ -380,7 +380,6 @@ let smol = smol_provider('wss://mainnet.infura.io/ws/v3/d2feb3605f5348228f891965
 let urlParams = new URLSearchParams(window.location.search);
 
 if (urlParams.has('contract') && urlParams.has('token')) {
-  console.log('ok')
   resolve0();
 }
 
@@ -532,12 +531,12 @@ for (let el of document.querySelectorAll('button[data-contract]')) {
 	let {contract, token} = el.dataset;
 	el.title = `Contract:\n${contract}\nToken:\n${token}`;
 	el.addEventListener('click', () => {
-		contract_field.value = contract;
-		token_field.value = token;
+    contract_field.value = contract;
+    token_field.value = token;
     urlParams.set("contract", contract);
     urlParams.set("token", token);
     window.history.pushState('', '', '?' + urlParams.toString());
-		resolve();
+    resolve();
 	});
 }
 
@@ -575,18 +574,18 @@ async function resolve() {
 }
 
 async function resolve0() {
-    let start = new Date();
+  let start = new Date();
 
   if (urlParams.has('contract')) {
     let contract = urlParams.get('contract');
   } else {
-	   let contract = contract_field.value.trim().toLowerCase();
+    let contract = contract_field.value.trim().toLowerCase();
   }
 
   if (urlParams.has('token')) {
     let token = urlParams.get('token');
   } else {
-	  let token = token_field.value.trim();
+    let token = token_field.value.trim();
   }
 
 	let output = document.querySelector('#output');
