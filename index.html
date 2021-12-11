@@ -61,9 +61,9 @@
                     <a href="#howto"><img class="img-fluid" src="img/info.svg" style="max-height: 1.5em;"></a>
                     <a href="https://opensea.io/art101.eth?tab=created"><img class="img-fluid" src="img/opensea.svg" style="max-height: 1.5em;margin-left:2em;"></a>
                     <a href="https://twitter.com/Art101NFT"><img class="img-fluid" src="img/twitter.svg" style="max-height: 1.5em;margin-left:2em;"></a>
-                    
-                    
-                    
+
+
+
 
 
                 </div>
@@ -83,12 +83,12 @@
                     <a href="#howto"><img class="img-fluid" src="img/info.svg" style="max-height: 1.75em;"></a>
                     <a href="https://opensea.io/art101.eth?tab=created"><img class="img-fluid" src="img/opensea.svg" style="max-height: 1.75em;margin-left:2em;"></a>
                     <a href="https://patrn.me/"><img class="img-fluid" src="img/patrn.svg" style="max-height: 1.75em;margin-left:2em;"></a>
-                    
+
                     <a href="https://art101.io"><img class="img-fluid" src="img/Art101_Splash.svg" style="max-height: 1.75em;margin-left:2em;"></a>
                     <a href="https://twitter.com/Art101NFT"><img class="img-fluid" src="img/twitter.svg" style="max-height: 1.75em;margin-left:2em;"></a>
-                    
-                    
-                    
+
+
+
 
 
                 </div>
@@ -395,7 +395,7 @@ async function contract_supports_interface(async_request_provider, contract, typ
 async function get_nft_info(async_request_provider, contract, token) {
 	if (/^0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB$/i.test(contract)) { // CryptoPunk
 		return {
-			contract_type: 'CryptoPunk', 
+			contract_type: 'CryptoPunk',
 			meta: {
 				name: `CryptoPunk #${token}`,
 				image: `https://www.larvalabs.com/public/images/cryptopunks/punk${token}.png`,
@@ -403,8 +403,8 @@ async function get_nft_info(async_request_provider, contract, token) {
 			},
 			supply: 10000
 		};
-	} 
-	let hex_token = BigInt(token).toString(16).padStart(64, '0');	
+	}
+	let hex_token = BigInt(token).toString(16).padStart(64, '0');
 	if (/^0x06012c8cf97bead5deae237070f9587f8e7a266d$/i.test(contract)) { // CryptoKitty
 		/*
 		let SIG = '0xe98b7f4d'; // getKitty(uint256)
@@ -428,8 +428,8 @@ async function get_nft_info(async_request_provider, contract, token) {
 		return {contract_type: 'ERC-1155', meta_url};
 	} else if (await contract_supports_interface(async_request_provider, contract, 'd31b620d')) { // nonstandard 721
 		// this is some kind of fucked up bullshit
-		/* ['name()', 'symbol()', 'totalSupply()', 'balanceOf(address)', 
-			'ownerOf(uint256)', 'approve(address,uint256)', 
+		/* ['name()', 'symbol()', 'totalSupply()', 'balanceOf(address)',
+			'ownerOf(uint256)', 'approve(address,uint256)',
 			'safeTransferFrom(address,address,uint256)']
 			.reduce((a, b) => a ^ BigInt(web3.utils.sha3(b)), 0n)
 			.toString(16)
@@ -529,7 +529,7 @@ for (let el of document.querySelectorAll('button[data-contract]')) {
 	el.title = `Contract:\n${contract}\nToken:\n${token}`;
 	el.addEventListener('click', () => {
 		contract_field.value = contract;
-		token_field.value = token;		
+		token_field.value = token;
 		resolve();
 	});
 }
@@ -569,7 +569,7 @@ async function resolve() {
 
 async function resolve0() {
     let start = new Date();
-	
+
 	let contract = contract_field.value.trim().toLowerCase();
 	let token = token_field.value.trim();
 
@@ -594,10 +594,10 @@ async function resolve0() {
 		/*
 		try {
 			info = await get_nft_info(async_request_provider, contract, token);
-		} catch (err) { 
+		} catch (err) {
 			if (err.code !== -32000) throw err;
 			pre_info.innerHTML = `Fetching contract ${contract} (again)...`;
-			await new Promise(ful => setTimeout(ful, 1500)); // wait 
+			await new Promise(ful => setTimeout(ful, 1500)); // wait
 			info = await get_nft_info(async_request_provider, contract, token);
 		}
 		*/
@@ -624,7 +624,7 @@ async function resolve0() {
 	a_contract.innerHTML = `<span class="duration">${format_dur(new Date() - start)}</span><b>${contract_type}:</b> <code>${contract}</code>`;
     a_contract.title = 'View contract on Etherscan';
 	output.append(a_contract);
-	
+
 	// download meta if missing
 	let pre_meta = document.createElement('pre');
 	if (meta) {
@@ -632,11 +632,11 @@ async function resolve0() {
 		h.classList.add('bubble', 'error');
 		h.innerHTML = '<b>Implicit Metadata</b>';
 		output.append(h, pre_meta);
-	} else {		
+	} else {
 		try {
 			if (!meta_url) throw new Error('Missing Metadata URL');
             let date0 = new Date();
-			let url = unfuck_url(meta_url); 
+			let url = unfuck_url(meta_url);
 			let url_http = replace_ipfs(url);
 			let h = create_link(url_http);
 			if (url.startsWith('data:')) {
@@ -645,7 +645,7 @@ async function resolve0() {
 				h.innerHTML = `<b>Metadata:</b> ${url}`;
 			}
 			pre_meta.innerHTML = 'Fetching metadata...';
-			output.append(h, pre_meta);					
+			output.append(h, pre_meta);
 			let res;
 			try {
 				res = await fetch(url_http, {headers: {'Origin': window.location.hostname}});
@@ -658,8 +658,8 @@ async function resolve0() {
 				h.classList.add('error');
 				res = await fetch(`./relay.php?${url_http}`);
 			}
-			if (res.status != 200) throw new Error(`HTTP Error ${res.status}`);			
-			let text = await res.text(); 
+			if (res.status != 200) throw new Error(`HTTP Error ${res.status}`);
+			let text = await res.text();
 			pre_meta.id = 'metadata';
             add_duration(h, date0);
 			try {
@@ -670,7 +670,7 @@ async function resolve0() {
 				h.classList.add('error');
 				pre_meta.innerHTML = text;
 				return;
-			}	
+			}
 		} catch (e) {
 			pre_meta.classList.add('error');
 			pre_meta.innerHTML = `Metadata fetch failed: ${e.message}`;
@@ -682,7 +682,7 @@ async function resolve0() {
 	// https://docs.opensea.io/docs/metadata-standards
 
 	let downloads = [];
-    let value;	
+    let value;
 
 	let remove_parsed = document.querySelector('#remove_parsed').checked;
 	function consume(key, test_fn) {
@@ -700,7 +700,7 @@ async function resolve0() {
 	a_name.innerHTML = consume_str('name') ?? `Unnamed Token #${token}`;
     a_name.title = 'View asset on Opensea';
     a_contract.insertAdjacentElement('afterend', a_name); // insert name above metadata
-   
+
 	if (value = consume_str('description')) {
 		let div = document.createElement('div');
 		div.classList.add('bubble');
@@ -729,7 +729,7 @@ async function resolve0() {
 		let grid = document.createElement('div');
 		grid.id = 'attributes';
 		for (let info of value.sort((a, b) => a)) {
-			let {trait_type, value, display_type} = info;				
+			let {trait_type, value, display_type} = info;
 			let div = document.createElement('div');
 			let html = `<span class="value">${value}</span>`;
 			if (trait_type) {
@@ -783,13 +783,13 @@ async function resolve0() {
 		pre.innerHTML = 'Fetching video...';
 		output.append(pre);
 		let video = document.createElement('video');
-		video.classList.add('asset');					
+		video.classList.add('asset');
 		video.muted = true;
 		video.autoplay = true;
 		video.controls = true;
 		//if (image_url) video.poster = image_url;
 		output.append(video);
-		downloads.push(new Promise(ful => {            
+		downloads.push(new Promise(ful => {
 			let source = document.createElement('source');
             function handle_error(e) {
                 pre.classList.add('error');
@@ -812,7 +812,7 @@ async function resolve0() {
 
 	/*
 	if (value = consume_str('youtube_url')) {
-		output.append(create_link(value, `<b>Youtube:</b> ${value}`));			
+		output.append(create_link(value, `<b>Youtube:</b> ${value}`));
 		let frame = document.createElement('iframe');
 		frame.classList.add('asset');
 		frame.src = value;
@@ -821,7 +821,7 @@ async function resolve0() {
 	*/
 
 	if (image_url) {
-        let date0 = new Date();        
+        let date0 = new Date();
 		image_url = unfuck_url(image_url);
 		let url_http = replace_ipfs(image_url);
         let h = create_link(url_http);
@@ -833,23 +833,23 @@ async function resolve0() {
 		output.append(h);
 		let pre = document.createElement('pre');
 		pre.innerHTML = 'Fetching image...';
-		output.append(pre);		
+		output.append(pre);
 		downloads.push(new Promise(ful => {
 			let img = new Image();
 			img.addEventListener('error', e => {
 				pre.classList.add('error');
-				pre.innerHTML = `Fetch image failed: ${e.message ?? 'Unknown reason'}`;	
+				pre.innerHTML = `Fetch image failed: ${e.message ?? 'Unknown reason'}`;
 				ful();
 			});
 			img.addEventListener('load', () => {
-				if (!pre.parentNode) return; 
+				if (!pre.parentNode) return;
 				img.classList.add('asset');
 				pre.parentNode.replaceChild(img, pre);
-				
+
 				// append an upscaled version if tiny
 				let {naturalWidth, naturalHeight} = img;
 				if (Math.min(naturalWidth, naturalHeight) > 0) {
-					
+
 					let div = document.createElement('div');
 					div.classList.add('dimensions');
 					div.innerHTML = `${naturalWidth} x ${naturalHeight}`;
@@ -873,7 +873,7 @@ async function resolve0() {
 		let svg = document.createElement('svg');
 		svg.classList.add('asset');
 		svg.innerHTML = value;
-		output.append(svg);	
+		output.append(svg);
 	}
 
 	// dont show the metadata if we parsed all of it
