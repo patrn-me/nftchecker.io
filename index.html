@@ -393,6 +393,45 @@ window.onload = function() {
   }
 };
 
+async function getETHtoUSD() {
+  let res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
+    .then((resp) => resp.json())
+    .then(function(data) {
+        if (!data['ethereum']) {
+          console.log('error fetching contract details on opensea! Got: ' + data)
+          return
+        }
+        return data['ethereum']['usd'];
+    })
+  return res
+}
+
+async function getOSContract(contractAddress) {
+  let res = await fetch('https://api.opensea.io/api/v1/asset_contract/' + contractAddress)
+    .then((resp) => resp.json())
+    .then(function(data) {
+        if (!data['collection']) {
+          console.log('error fetching contract details on opensea! Got: ' + data)
+          return
+        }
+        return data;
+    })
+  return res
+}
+
+async function getOSCollectionStats(collectionSlug) {
+  let res = await fetch('https://api.opensea.io/api/v1/collection/' + collectionSlug + '/stats')
+    .then((resp) => resp.json())
+    .then(function(data) {
+        if (!data['stats']) {
+          console.log('error fetching collection stats on opensea! Got: ' + data)
+          return
+        }
+        return data;
+    })
+  return res
+}
+
 function unsigned_mod(x, d) {
 	return (d + (x % d)) % d;
 }
@@ -829,15 +868,33 @@ async function resolve0() {
 		}));
 	}
 
-	/*
-	if (value = consume_str('youtube_url')) {
-		output.append(create_link(value, `<b>Youtube:</b> ${value}`));
-		let frame = document.createElement('iframe');
-		frame.classList.add('asset');
-		frame.src = value;
-		document.append(frame);
-	}
-	*/
+  try {
+    // Fetch contract and collection details from Opensea API. ETH/USD info from Coingecko
+    let openseaContract = await getOSContract(contract);
+    let openseaCollectionStats = await getOSCollectionStats(openseaContract['collection']['slug']);
+    let ethUSD = await getETHtoUSD();
+
+    // Structure new HTML
+    let saleDetails = document.createElement('div');
+  	saleDetails.classList.add('bubble');
+
+    // Add new text into HTML struct
+    let floorPrice = document.createElement('p');
+    floorPrice.innerHTML = `<p><strong>Floor Price:</strong> <code>${openseaCollectionStats['stats']['floor_price']} ETH ($${ethUSD * openseaCollectionStats['stats']['floor_price']})</code>`;
+    let totalSales = document.createElement('p');
+    totalSales.innerHTML = `<p><strong>Total Sales:</strong> <code>${openseaCollectionStats['stats']['total_sales']}</code>`;
+    let totalVolume = document.createElement('p');
+    totalVolume.innerHTML = `<p><strong>Total Volume:</strong> <code>${openseaCollectionStats['stats']['total_volume']} ETH ($${ethUSD * openseaCollectionStats['stats']['total_volume']})</code>`;
+
+    saleDetails.append(floorPrice);
+    saleDetails.append(totalSales);
+    saleDetails.append(totalVolume);
+
+    // Add to existing HTML struct
+    output.append(saleDetails);
+  } catch(e) {
+    console.log(`Error fetching floor details from Opensea: ${e}`);
+  }
 
 	if (image_url) {
         let date0 = new Date();
